@@ -1,4 +1,3 @@
-
 import { Star, Heart } from 'lucide-react';
 import { useEffect, useState } from 'react';
 
@@ -164,9 +163,11 @@ const Reviews = () => {
             {[...reviews, ...reviews].map((review, index) => (
               <div
                 key={index}
-                style={{maxWidth: '400px'}}
-                className={"bg-white rounded-3xl p-6 shadow-2xl hover:shadow-3xl transition-all duration-300 transform border-4 border-black min-w-[340px] flex-shrink-0 animate-card-float"}
-                style={{ animationDelay: `${index * 0.1}s` }}
+                className="bg-white rounded-3xl p-6 shadow-2xl hover:shadow-3xl transition-all duration-300 transform border-4 border-black min-w-[340px] flex-shrink-0 animate-card-float"
+                style={{ 
+                  maxWidth: '400px', 
+                  animationDelay: `${index * 0.1}s` 
+                }}
               >
                 <div className="flex items-center mb-4">
                   <div className="ml-4 flex-1">
