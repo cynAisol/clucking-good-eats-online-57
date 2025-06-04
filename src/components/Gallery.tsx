@@ -1,5 +1,15 @@
 
+import { useEffect, useState } from 'react';
+
 const Gallery = () => {
+  const [scrollY, setScrollY] = useState(0);
+
+  useEffect(() => {
+    const handleScroll = () => setScrollY(window.scrollY);
+    window.addEventListener('scroll', handleScroll);
+    return () => window.removeEventListener('scroll', handleScroll);
+  }, []);
+
   const galleryImages = [
     {
       id: 1,
@@ -41,30 +51,67 @@ const Gallery = () => {
 
   return (
     <section id="gallery" className="py-20 bg-gradient-to-br from-white via-gray-100 to-white relative overflow-hidden">
-      {/* Funky background elements */}
+      {/* Parallax background elements */}
       <div className="absolute inset-0">
-        <div className="absolute top-20 right-10 w-40 h-40 bg-yellow-400 rounded-full opacity-20 animate-ping"></div>
-        <div className="absolute bottom-32 left-20 w-28 h-28 bg-black rotate-45 opacity-25 animate-bounce"></div>
-        <div className="absolute top-1/3 right-1/3 w-20 h-20 bg-yellow-400 rounded-full opacity-30"></div>
+        <div 
+          className="absolute top-20 right-10 w-40 h-40 bg-yellow-400 rounded-full opacity-20 animate-ping"
+          style={{ transform: `translateY(${scrollY * 0.2}px) translateX(${-scrollY * 0.1}px)` }}
+        ></div>
+        <div 
+          className="absolute bottom-32 left-20 w-28 h-28 bg-black rotate-45 opacity-25 animate-bounce"
+          style={{ transform: `translateY(${-scrollY * 0.15}px) rotate(${45 + scrollY * 0.1}deg)` }}
+        ></div>
+        <div 
+          className="absolute top-1/3 right-1/3 w-20 h-20 bg-yellow-400 rounded-full opacity-30"
+          style={{ transform: `translateY(${scrollY * 0.25}px) scale(${1 + scrollY * 0.0003})` }}
+        ></div>
+        <div 
+          className="absolute top-2/3 left-1/4 w-16 h-16 bg-black opacity-20"
+          style={{ transform: `translateY(${scrollY * 0.18}px) translateX(${scrollY * 0.05}px)` }}
+        ></div>
       </div>
 
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
-        <div className="text-center mb-16">
-          <div className="inline-block bg-black text-yellow-400 px-6 py-2 rounded-full font-black text-sm mb-4 transform rotate-2">
+        <div 
+          className="text-center mb-16"
+          style={{ transform: `translateY(${scrollY * 0.1}px)` }}
+        >
+          <div className="inline-block bg-black text-yellow-400 px-6 py-2 rounded-full font-black text-sm mb-4 transform rotate-2 animate-bounce">
             📸 PHOTO GALLERY 📸
           </div>
           <h2 className="text-6xl font-black text-black mb-6 drop-shadow-lg">
-            <span className="block">FEAST YOUR</span>
-            <span className="block text-yellow-500 transform -rotate-1">EYES! 👀</span>
+            <span 
+              className="block animate-slide-down"
+              style={{ animationDelay: '0.2s', animationFillMode: 'both' }}
+            >
+              FEAST YOUR
+            </span>
+            <span 
+              className="block text-yellow-500 transform -rotate-1 animate-slide-up"
+              style={{ animationDelay: '0.4s', animationFillMode: 'both' }}
+            >
+              EYES! 👀
+            </span>
           </h2>
-          <p className="text-xl text-black max-w-2xl mx-auto font-bold">
+          <p 
+            className="text-xl text-black max-w-2xl mx-auto font-bold animate-fade-in"
+            style={{ animationDelay: '0.6s', animationFillMode: 'both' }}
+          >
             Warning: These photos might cause EXTREME hunger! View at your own risk! 🚨
           </p>
         </div>
 
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
           {galleryImages.map((image, index) => (
-            <div key={image.id} className={`group relative overflow-hidden rounded-3xl shadow-2xl hover:shadow-3xl transition-all duration-500 transform hover:scale-105 ${index % 3 === 0 ? 'hover:rotate-3' : index % 3 === 1 ? 'hover:-rotate-3' : 'hover:rotate-1'} border-4 border-black`}>
+            <div 
+              key={image.id} 
+              className={`group relative overflow-hidden rounded-3xl shadow-2xl hover:shadow-3xl transition-all duration-500 transform hover:scale-105 ${index % 3 === 0 ? 'hover:rotate-3' : index % 3 === 1 ? 'hover:-rotate-3' : 'hover:rotate-1'} border-4 border-black animate-zoom-in`}
+              style={{ 
+                animationDelay: `${0.8 + index * 0.1}s`, 
+                animationFillMode: 'both',
+                transform: `translateY(${scrollY * (0.05 + index * 0.02)}px) rotate(${scrollY * 0.01}deg)`
+              }}
+            >
               <img 
                 src={image.src} 
                 alt={image.alt}
@@ -90,18 +137,101 @@ const Gallery = () => {
           ))}
         </div>
 
-        <div className="text-center mt-16">
-          <div className="bg-black text-yellow-400 py-8 px-6 rounded-3xl transform rotate-1 shadow-2xl border-4 border-yellow-400">
-            <h3 className="text-4xl font-black mb-4">📱 SHARE THE MADNESS!</h3>
+        <div 
+          className="text-center mt-16"
+          style={{ transform: `translateY(${scrollY * 0.08}px)` }}
+        >
+          <div className="bg-black text-yellow-400 py-8 px-6 rounded-3xl transform rotate-1 shadow-2xl border-4 border-yellow-400 animate-scale-bounce" style={{ animationDelay: '1.5s', animationFillMode: 'both' }}>
+            <h3 className="text-4xl font-black mb-4 animate-pulse">📱 SHARE THE MADNESS!</h3>
             <p className="mb-6 font-bold text-lg">Tag us in your chicken adventures!</p>
             <div className="flex justify-center space-x-4">
-              <span className="bg-yellow-400 text-black px-4 py-2 rounded-full font-black">#ChickenMadness</span>
-              <span className="bg-white text-black px-4 py-2 rounded-full font-black">#CrispyGoodness</span>
-              <span className="bg-yellow-400 text-black px-4 py-2 rounded-full font-black">#FlavorExplosion</span>
+              <span className="bg-yellow-400 text-black px-4 py-2 rounded-full font-black animate-bounce" style={{ animationDelay: '2s' }}>#ChickenMadness</span>
+              <span className="bg-white text-black px-4 py-2 rounded-full font-black animate-bounce" style={{ animationDelay: '2.2s' }}>#CrispyGoodness</span>
+              <span className="bg-yellow-400 text-black px-4 py-2 rounded-full font-black animate-bounce" style={{ animationDelay: '2.4s' }}>#FlavorExplosion</span>
             </div>
           </div>
         </div>
       </div>
+
+      <style>{`
+        @keyframes slide-down {
+          0% {
+            transform: translateY(-50px);
+            opacity: 0;
+          }
+          100% {
+            transform: translateY(0);
+            opacity: 1;
+          }
+        }
+
+        @keyframes slide-up {
+          0% {
+            transform: translateY(50px) rotate(-1deg);
+            opacity: 0;
+          }
+          100% {
+            transform: translateY(0) rotate(-1deg);
+            opacity: 1;
+          }
+        }
+
+        @keyframes zoom-in {
+          0% {
+            transform: scale(0.8);
+            opacity: 0;
+          }
+          100% {
+            transform: scale(1);
+            opacity: 1;
+          }
+        }
+
+        @keyframes scale-bounce {
+          0% {
+            transform: scale(0.5) rotate(1deg);
+            opacity: 0;
+          }
+          50% {
+            transform: scale(1.05) rotate(1deg);
+          }
+          100% {
+            transform: scale(1) rotate(1deg);
+            opacity: 1;
+          }
+        }
+
+        .animate-slide-down {
+          animation: slide-down 0.8s ease-out;
+        }
+
+        .animate-slide-up {
+          animation: slide-up 0.8s ease-out;
+        }
+
+        .animate-zoom-in {
+          animation: zoom-in 0.6s ease-out;
+        }
+
+        .animate-scale-bounce {
+          animation: scale-bounce 1s ease-out;
+        }
+
+        .animate-fade-in {
+          animation: fade-in 0.8s ease-out;
+        }
+
+        @keyframes fade-in {
+          0% {
+            opacity: 0;
+            transform: translateY(30px);
+          }
+          100% {
+            opacity: 1;
+            transform: translateY(0);
+          }
+        }
+      `}</style>
     </section>
   );
 };
