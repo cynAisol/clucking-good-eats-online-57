@@ -1,4 +1,14 @@
+import { useEffect, useState } from 'react';
+
 const Menu = () => {
+  const [scrollY, setScrollY] = useState(0);
+
+  useEffect(() => {
+    const handleScroll = () => setScrollY(window.scrollY);
+    window.addEventListener('scroll', handleScroll);
+    return () => window.removeEventListener('scroll', handleScroll);
+  }, []);
+
   const menuItems = [
     {
       id: 1,
@@ -64,10 +74,34 @@ const Menu = () => {
           <div className="inline-block bg-yellow-400 text-black px-6 py-2 rounded-full font-black text-sm mb-4 transform -rotate-2">
             🍗 MENU MADNESS 🍗
           </div>
-          <h2 className="text-6xl font-black text-white mb-6 drop-shadow-lg">
-            <span className="block">OUR CRAZY</span>
-            <span className="block text-yellow-400 transform rotate-1">CHICKEN MENU!</span>
-          </h2>
+          
+          {/* Parallax Title */}
+          <div 
+            className="relative"
+            style={{
+              transform: `translateY(${scrollY * 0.1}px)`
+            }}
+          >
+            <h2 className="text-6xl font-black text-white mb-6 drop-shadow-lg">
+              <span 
+                className="block"
+                style={{
+                  transform: `translateX(${-scrollY * 0.05}px)`
+                }}
+              >
+                OUR CRAZY
+              </span>
+              <span 
+                className="block text-yellow-400 transform rotate-1"
+                style={{
+                  transform: `translateX(${scrollY * 0.05}px) rotate(1deg)`
+                }}
+              >
+                CHICKEN MENU!
+              </span>
+            </h2>
+          </div>
+          
           <p className="text-xl text-white max-w-2xl mx-auto font-bold">
             Get ready for the WILDEST chicken dishes that'll make your taste buds DANCE! 💃🕺
           </p>
@@ -75,12 +109,21 @@ const Menu = () => {
 
         <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
           {menuItems.map((item, index) => (
-            <div key={item.id} className={`bg-white rounded-3xl shadow-2xl overflow-hidden transform hover:scale-105 hover:rotate-2 transition-all duration-300 border-4 ${index % 2 === 0 ? 'border-yellow-400' : 'border-black'}`}>
+            <div 
+              key={item.id} 
+              className={`bg-white rounded-3xl shadow-2xl overflow-hidden transform hover:scale-105 hover:rotate-2 transition-all duration-300 border-4 ${index % 2 === 0 ? 'border-yellow-400' : 'border-black'}`}
+              style={{
+                transform: `translateY(${scrollY * (0.02 + index * 0.01)}px)`
+              }}
+            >
               <div className="relative overflow-hidden">
                 <img 
                   src={item.image} 
                   alt={item.name}
                   className="w-full h-48 object-cover hover:scale-110 transition-transform duration-300"
+                  style={{
+                    transform: `scale(1.1) translateY(${-scrollY * (0.03 + index * 0.005)}px)`
+                  }}
                 />
                 <div className="absolute top-4 left-4 bg-black text-yellow-400 p-2 rounded-full font-black text-2xl animate-bounce">
                   {item.emoji}
