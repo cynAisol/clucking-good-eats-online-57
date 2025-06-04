@@ -1,14 +1,4 @@
-import { useEffect, useState } from 'react';
-
 const Menu = () => {
-  const [scrollY, setScrollY] = useState(0);
-
-  useEffect(() => {
-    const handleScroll = () => setScrollY(window.scrollY);
-    window.addEventListener('scroll', handleScroll);
-    return () => window.removeEventListener('scroll', handleScroll);
-  }, []);
-
   const menuItems = [
     {
       id: 1,
@@ -62,67 +52,30 @@ const Menu = () => {
 
   return (
     <section id="menu" className="py-20 bg-gradient-to-br from-black via-gray-900 to-black relative overflow-hidden">
-      {/* Parallax Background decoration */}
+      {/* Background decoration */}
       <div className="absolute inset-0">
-        <div 
-          className="absolute top-10 left-10 w-32 h-32 bg-yellow-400 rounded-full opacity-20 animate-bounce"
-          style={{ transform: `translateY(${scrollY * 0.15}px) translateX(${scrollY * 0.1}px)` }}
-        ></div>
-        <div 
-          className="absolute bottom-20 right-20 w-24 h-24 bg-white rounded-full opacity-30 animate-pulse"
-          style={{ transform: `translateY(${-scrollY * 0.2}px) translateX(${-scrollY * 0.05}px)` }}
-        ></div>
-        <div 
-          className="absolute top-1/2 left-1/4 w-16 h-16 bg-yellow-400 rotate-45 opacity-25"
-          style={{ transform: `translateY(${scrollY * 0.25}px) rotate(${45 + scrollY * 0.1}deg)` }}
-        ></div>
-        <div 
-          className="absolute top-1/3 right-1/3 w-20 h-20 bg-white opacity-20"
-          style={{ transform: `translateY(${scrollY * 0.12}px) scale(${1 + scrollY * 0.0005})` }}
-        ></div>
+        <div className="absolute top-10 left-10 w-32 h-32 bg-yellow-400 rounded-full opacity-20 animate-bounce"></div>
+        <div className="absolute bottom-20 right-20 w-24 h-24 bg-white rounded-full opacity-30 animate-pulse"></div>
+        <div className="absolute top-1/2 left-1/4 w-16 h-16 bg-yellow-400 rotate-45 opacity-25"></div>
       </div>
 
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
-        <div 
-          className="text-center mb-16"
-          style={{ transform: `translateY(${scrollY * 0.1}px)` }}
-        >
-          <div className="inline-block bg-yellow-400 text-black px-6 py-2 rounded-full font-black text-sm mb-4 transform -rotate-2 animate-bounce">
+        <div className="text-center mb-16">
+          <div className="inline-block bg-yellow-400 text-black px-6 py-2 rounded-full font-black text-sm mb-4 transform -rotate-2">
             🍗 MENU MADNESS 🍗
           </div>
           <h2 className="text-6xl font-black text-white mb-6 drop-shadow-lg">
-            <span 
-              className="block animate-slide-in-left"
-              style={{ animationDelay: '0.2s', animationFillMode: 'both' }}
-            >
-              OUR CRAZY
-            </span>
-            <span 
-              className="block text-yellow-400 transform rotate-1 animate-slide-in-right"
-              style={{ animationDelay: '0.4s', animationFillMode: 'both' }}
-            >
-              CHICKEN MENU!
-            </span>
+            <span className="block">OUR CRAZY</span>
+            <span className="block text-yellow-400 transform rotate-1">CHICKEN MENU!</span>
           </h2>
-          <p 
-            className="text-xl text-white max-w-2xl mx-auto font-bold animate-fade-in"
-            style={{ animationDelay: '0.6s', animationFillMode: 'both' }}
-          >
+          <p className="text-xl text-white max-w-2xl mx-auto font-bold">
             Get ready for the WILDEST chicken dishes that'll make your taste buds DANCE! 💃🕺
           </p>
         </div>
 
         <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
           {menuItems.map((item, index) => (
-            <div 
-              key={item.id} 
-              className={`bg-white rounded-3xl shadow-2xl overflow-hidden transform hover:scale-105 hover:rotate-2 transition-all duration-300 border-4 ${index % 2 === 0 ? 'border-yellow-400' : 'border-black'} animate-fade-in`}
-              style={{ 
-                animationDelay: `${0.8 + index * 0.1}s`, 
-                animationFillMode: 'both',
-                transform: `translateY(${scrollY * (0.05 + index * 0.01)}px)`
-              }}
-            >
+            <div key={item.id} className={`bg-white rounded-3xl shadow-2xl overflow-hidden transform hover:scale-105 hover:rotate-2 transition-all duration-300 border-4 ${index % 2 === 0 ? 'border-yellow-400' : 'border-black'}`}>
               <div className="relative overflow-hidden">
                 <img 
                   src={item.image} 
@@ -152,11 +105,8 @@ const Menu = () => {
           ))}
         </div>
 
-        <div 
-          className="text-center mt-16"
-          style={{ transform: `translateY(${scrollY * 0.08}px)` }}
-        >
-          <div className="bg-yellow-400 text-black py-8 px-6 rounded-3xl transform -rotate-1 shadow-2xl relative overflow-hidden animate-scale-in" style={{ animationDelay: '1.5s', animationFillMode: 'both' }}>
+        <div className="text-center mt-16">
+          <div className="bg-yellow-400 text-black py-8 px-6 rounded-3xl transform -rotate-1 shadow-2xl relative overflow-hidden">
             {/* Left side chicken image */}
             <div className="absolute left-4 top-1/2 transform -translate-y-1/2 hidden md:block">
               <img 
@@ -200,68 +150,6 @@ const Menu = () => {
           </div>
         </div>
       </div>
-
-      <style>{`
-        @keyframes slide-in-left {
-          0% {
-            transform: translateX(-100px);
-            opacity: 0;
-          }
-          100% {
-            transform: translateX(0);
-            opacity: 1;
-          }
-        }
-
-        @keyframes slide-in-right {
-          0% {
-            transform: translateX(100px) rotate(1deg);
-            opacity: 0;
-          }
-          100% {
-            transform: translateX(0) rotate(1deg);
-            opacity: 1;
-          }
-        }
-
-        @keyframes fade-in {
-          0% {
-            opacity: 0;
-            transform: translateY(30px);
-          }
-          100% {
-            opacity: 1;
-            transform: translateY(0);
-          }
-        }
-
-        @keyframes scale-in {
-          0% {
-            transform: scale(0.8) rotate(-1deg);
-            opacity: 0;
-          }
-          100% {
-            transform: scale(1) rotate(-1deg);
-            opacity: 1;
-          }
-        }
-
-        .animate-slide-in-left {
-          animation: slide-in-left 0.8s ease-out;
-        }
-
-        .animate-slide-in-right {
-          animation: slide-in-right 0.8s ease-out;
-        }
-
-        .animate-fade-in {
-          animation: fade-in 0.8s ease-out;
-        }
-
-        .animate-scale-in {
-          animation: scale-in 1s ease-out;
-        }
-      `}</style>
     </section>
   );
 };
